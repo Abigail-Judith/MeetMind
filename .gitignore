@@ -11,5 +11,5 @@ backend/venv/
 # VS Code
 .vscode/
 
-# Database
-*.db
+# SQLite
+*.sqlite3
