@@ -1,18 +1,29 @@
-from app.security import hash_password
 from sqlalchemy.orm import Session
-
 from app import models, schemas
+from app.security import hash_password, verify_password
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    new_user = models.User(
+    db_user = models.User(
         username=user.username,
         email=user.email,
-        password=hash_password(user.password),
+        password=hash_password(user.password)
     )
 
-    db.add(new_user)
+    db.add(db_user)
     db.commit()
-    db.refresh(new_user)
+    db.refresh(db_user)
 
-    return new_user
+    return db_user
+
+
+def authenticate_user(db: Session, email: str, password: str):
+    user = db.query(models.User).filter(models.User.email == email).first()
+
+    if not user:
+        return None
+
+    if not verify_password(password, user.password):
+        return None
+
+    return user
