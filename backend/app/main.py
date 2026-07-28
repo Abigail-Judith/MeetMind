@@ -1,45 +1,19 @@
-from fastapi import Depends, FastAPI
-from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordRequestForm
-from app import crud, models, schemas
-from app.database import Base, engine, get_db
-from app.security import create_access_token, get_current_user
+from fastapi import FastAPI
+
+from app.database import Base, engine
+from app.routers import auth, meetings
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="MeetMind API")
+
+
+app.include_router(auth.router)
+app.include_router(meetings.router)
 
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to MeetMind AI 🚀"}
-
-
-@app.post("/register", response_model=schemas.UserResponse)
-def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    return crud.create_user(db, user)
-
-@app.post("/login")
-def login(
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db)
-):
-    db_user = crud.authenticate_user(
-        db,
-        form_data.username,
-        form_data.password
-    )
-
-    if not db_user:
-        return {"message": "Invalid email or password"}
-
-    token = create_access_token({"sub": db_user.email})
-
     return {
-        "access_token": token,
-        "token_type": "bearer"
+        "message": "Welcome to MeetMind AI 🚀"
     }
-
-@app.get("/profile", response_model=schemas.UserResponse)
-def profile(current_user=Depends(get_current_user)):
-    return current_user

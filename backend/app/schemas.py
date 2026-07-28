@@ -17,3 +17,19 @@ class UserResponse(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class MeetingCreate(BaseModel):
+    title: str
+    description: str
+    meeting_time: str
+
+
+class MeetingResponse(BaseModel):
+    id: int
+    title: str
+    description: str
+    meeting_time: str
+    owner_id: int
+
+    class Config:
+        from_attributes = True

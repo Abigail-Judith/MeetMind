@@ -27,3 +27,17 @@ def authenticate_user(db: Session, email: str, password: str):
         return None
 
     return user
+
+def create_meeting(db: Session, meeting: schemas.MeetingCreate, owner_id: int):
+    db_meeting = models.Meeting(
+        title=meeting.title,
+        description=meeting.description,
+        meeting_time=meeting.meeting_time,
+        owner_id=owner_id
+    )
+
+    db.add(db_meeting)
+    db.commit()
+    db.refresh(db_meeting)
+
+    return db_meeting
