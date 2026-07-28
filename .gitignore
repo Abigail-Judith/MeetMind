@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 
 # Virtual Environment
-backend/venv/
+venv/
 
 # Environment Variables
 .env
