@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app import models, schemas
 from app.security import hash_password, verify_password
-
+MAX_HISTORY = 10
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(
@@ -72,9 +72,12 @@ def build_chat_history(db, meeting_id):
     conversations = (
         db.query(models.Conversation)
         .filter(models.Conversation.meeting_id == meeting_id)
-        .order_by(models.Conversation.created_at.asc())
+        .order_by(models.Conversation.created_at.desc())
+        .limit(MAX_HISTORY)
         .all()
     )
+
+    conversations.reverse()
 
     history = ""
 
