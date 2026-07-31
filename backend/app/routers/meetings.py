@@ -15,3 +15,13 @@ def create_meeting(
     current_user: models.User = Depends(get_current_user)
 ):
     return crud.create_meeting(db, meeting, current_user.id)
+
+@router.get(
+    "/meetings/{meeting_id}/history",
+    response_model=list[schemas.ConversationResponse]
+)
+def get_history(
+    meeting_id: int,
+    db: Session = Depends(get_db)
+):
+    return crud.get_conversations(db, meeting_id)

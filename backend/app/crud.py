@@ -59,3 +59,27 @@ def save_conversation(
     db.refresh(conversation)
 
     return conversation
+
+def get_conversations(db, meeting_id):
+    return (
+        db.query(models.Conversation)
+        .filter(models.Conversation.meeting_id == meeting_id)
+        .order_by(models.Conversation.created_at.asc())
+        .all()
+    )
+
+def build_chat_history(db, meeting_id):
+    conversations = (
+        db.query(models.Conversation)
+        .filter(models.Conversation.meeting_id == meeting_id)
+        .order_by(models.Conversation.created_at.asc())
+        .all()
+    )
+
+    history = ""
+
+    for conv in conversations:
+        history += f"User: {conv.user_message}\n"
+        history += f"AI: {conv.ai_response}\n\n"
+
+    return history

@@ -22,7 +22,16 @@ def chat(
     message: str,
     db: Session = Depends(get_db)
 ):
-    reply = ask_ai(message)
+    history = crud.build_chat_history(db, meeting_id)
+
+    prompt = f"""
+{history}
+
+User: {message}
+AI:
+"""
+
+    reply = ask_ai(prompt)
 
     crud.save_conversation(
         db=db,
