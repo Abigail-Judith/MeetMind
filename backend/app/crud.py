@@ -41,3 +41,21 @@ def create_meeting(db: Session, meeting: schemas.MeetingCreate, owner_id: int):
     db.refresh(db_meeting)
 
     return db_meeting
+
+def save_conversation(
+    db,
+    meeting_id,
+    user_message,
+    ai_response
+):
+    conversation = models.Conversation(
+        meeting_id=meeting_id,
+        user_message=user_message,
+        ai_response=ai_response
+    )
+
+    db.add(conversation)
+    db.commit()
+    db.refresh(conversation)
+
+    return conversation

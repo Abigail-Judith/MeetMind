@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
 
 class UserCreate(BaseModel):
@@ -30,6 +31,21 @@ class MeetingResponse(BaseModel):
     description: str
     meeting_time: str
     owner_id: int
+
+    class Config:
+        from_attributes = True
+
+class ConversationCreate(BaseModel):
+    meeting_id: int
+    user_message: str
+
+
+class ConversationResponse(BaseModel):
+    id: int
+    meeting_id: int
+    user_message: str
+    ai_response: str
+    created_at: datetime
 
     class Config:
         from_attributes = True
