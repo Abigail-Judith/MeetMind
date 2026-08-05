@@ -40,3 +40,29 @@ class Conversation(Base):
         DateTime,
         default=lambda: datetime.now(UTC)
     )
+
+class Task(Base):
+    __tablename__ = "tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    meeting_id = Column(
+        Integer,
+        ForeignKey("meetings.id")
+    )
+
+    person = Column(String)
+
+    task = Column(String)
+
+    deadline = Column(String)
+
+    status = Column(
+        String,
+        default="Pending"
+    )
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(UTC)
+    )

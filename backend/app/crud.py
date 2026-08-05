@@ -86,3 +86,30 @@ def build_chat_history(db, meeting_id):
         history += f"AI: {conv.ai_response}\n\n"
 
     return history
+
+def save_task(
+    db,
+    meeting_id,
+    person,
+    task,
+    deadline
+):
+    new_task = models.Task(
+        meeting_id=meeting_id,
+        person=person,
+        task=task,
+        deadline=deadline
+    )
+
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+
+    return new_task
+
+def get_tasks(db, meeting_id):
+    return (
+        db.query(models.Task)
+        .filter(models.Task.meeting_id == meeting_id)
+        .all()
+    )
