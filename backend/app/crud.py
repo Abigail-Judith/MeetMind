@@ -111,5 +111,20 @@ def get_tasks(db, meeting_id):
     return (
         db.query(models.Task)
         .filter(models.Task.meeting_id == meeting_id)
+        .order_by(models.Task.created_at.asc())
         .all()
     )
+
+def complete_task(db, task_id):
+    task = (
+        db.query(models.Task)
+        .filter(models.Task.id == task_id)
+        .first()
+    )
+
+    if task:
+        task.status = "Completed"
+        db.commit()
+        db.refresh(task)
+
+    return task
