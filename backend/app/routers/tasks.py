@@ -60,3 +60,20 @@ def complete_task(
         )
 
     return task
+
+@router.delete("/{task_id}")
+def delete_task(
+    task_id: int,
+    db: Session = Depends(get_db)
+):
+    deleted = crud.delete_task(db, task_id)
+
+    if not deleted:
+        raise HTTPException(
+            status_code=404,
+            detail="Task not found"
+        )
+
+    return {
+        "message": "Task deleted successfully"
+    }

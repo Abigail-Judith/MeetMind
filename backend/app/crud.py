@@ -128,3 +128,18 @@ def complete_task(db, task_id):
         db.refresh(task)
 
     return task
+
+def delete_task(db, task_id):
+    task = (
+        db.query(models.Task)
+        .filter(models.Task.id == task_id)
+        .first()
+    )
+
+    if not task:
+        return None
+
+    db.delete(task)
+    db.commit()
+
+    return True
