@@ -66,3 +66,20 @@ class Task(Base):
         DateTime,
         default=lambda: datetime.now(UTC)
     )
+
+class Transcript(Base):
+    __tablename__ = "transcripts"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    meeting_id = Column(
+        Integer,
+        ForeignKey("meetings.id")
+    )
+
+    transcript = Column(String)
+
+    created_at = Column(
+        DateTime,
+        default=lambda: datetime.now(UTC)
+    )
