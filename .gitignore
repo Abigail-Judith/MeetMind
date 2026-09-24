@@ -13,3 +13,7 @@ venv/
 
 # SQLite
 *.sqlite3
+
+# MeetMind generated files
+uploads/
+chroma_db/
