@@ -7,6 +7,7 @@ from app.routers import tasks
 from app import models
 from app.routers import audio
 from app.routers import documents
+from app.routers import rag
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,7 @@ app.include_router(summary.router)
 app.include_router(tasks.router)
 app.include_router(audio.router)
 app.include_router(documents.router)
+app.include_router(rag.router)
 
 @app.get("/")
 def root():
