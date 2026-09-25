@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from sqlalchemy.orm import Session
 
@@ -41,7 +41,31 @@ def get_meetings(
         current_user.id
     )
 
+@router.get(
+    "/meetings/{meeting_id}",
+    response_model=schemas.MeetingResponse
+)
+def get_meeting(
+    meeting_id: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    meeting = (
+        db.query(models.Meeting)
+        .filter(
+            models.Meeting.id == meeting_id,
+            models.Meeting.owner_id == current_user.id
+        )
+        .first()
+    )
 
+    if not meeting:
+        raise HTTPException(
+            status_code=404,
+            detail="Meeting not found"
+        )
+
+    return meeting
 @router.get(
     "/meetings/{meeting_id}/history",
     response_model=list[schemas.ConversationResponse]

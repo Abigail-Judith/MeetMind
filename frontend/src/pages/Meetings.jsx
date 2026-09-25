@@ -222,6 +222,14 @@ function Meetings() {
                                 <div
                                     className="dashboard-card"
                                     key={meeting.id}
+                                    onClick={() =>
+                                        navigate(
+                                            `/meetings/${meeting.id}`
+                                        )
+                                    }
+                                    style={{
+                                        cursor: "pointer"
+                                    }}
                                 >
 
                                     <h3>
