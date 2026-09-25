@@ -42,6 +42,14 @@ def create_meeting(db: Session, meeting: schemas.MeetingCreate, owner_id: int):
 
     return db_meeting
 
+def get_meetings(db: Session, owner_id: int):
+    return (
+        db.query(models.Meeting)
+        .filter(models.Meeting.owner_id == owner_id)
+        .order_by(models.Meeting.meeting_time.desc())
+        .all()
+    )
+
 def save_conversation(
     db,
     meeting_id,

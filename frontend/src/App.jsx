@@ -6,8 +6,10 @@ import {
 } from "react-router-dom";
 
 import "./App.css";
+
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Meetings from "./pages/Meetings";
 
 function App() {
   return (
@@ -23,6 +25,11 @@ function App() {
         <Route
           path="/dashboard"
           element={<Dashboard />}
+        />
+
+        <Route
+          path="/meetings"
+          element={<Meetings />}
         />
 
         <Route

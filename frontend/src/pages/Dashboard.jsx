@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
+    const navigate = useNavigate();
     const username = "Abigail";
 
     return (
@@ -27,61 +30,86 @@ function Dashboard() {
 
                 <section className="dashboard-grid">
 
+                    {/* Meetings */}
                     <div className="dashboard-card">
                         <h3>📅 Meetings</h3>
+
                         <p>
                             Create and manage your meetings.
                         </p>
-                        <button>
+
+                        <button
+                            onClick={() => navigate("/meetings")}
+                        >
                             View Meetings
                         </button>
                     </div>
 
+
+                    {/* Audio Transcription */}
                     <div className="dashboard-card">
                         <h3>🎙️ Audio Transcription</h3>
+
                         <p>
                             Upload meeting audio and generate transcripts.
                         </p>
+
                         <button>
                             Upload Audio
                         </button>
                     </div>
 
+
+                    {/* Documents */}
                     <div className="dashboard-card">
                         <h3>📄 Documents</h3>
+
                         <p>
                             Upload PDF or Word documents for AI-powered search.
                         </p>
+
                         <button>
                             Upload Document
                         </button>
                     </div>
 
+
+                    {/* Ask MeetMind */}
                     <div className="dashboard-card">
                         <h3>🤖 Ask MeetMind</h3>
+
                         <p>
                             Ask questions about your meeting information.
                         </p>
+
                         <button>
                             Ask AI
                         </button>
                     </div>
 
+
+                    {/* Summaries */}
                     <div className="dashboard-card">
                         <h3>📝 Summaries</h3>
+
                         <p>
                             Generate AI-powered meeting summaries.
                         </p>
+
                         <button>
                             View Summaries
                         </button>
                     </div>
 
+
+                    {/* Action Items */}
                     <div className="dashboard-card">
                         <h3>✅ Action Items</h3>
+
                         <p>
                             Track tasks and deadlines extracted from meetings.
                         </p>
+
                         <button>
                             View Tasks
                         </button>
